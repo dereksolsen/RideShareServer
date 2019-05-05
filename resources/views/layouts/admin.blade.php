@@ -18,6 +18,10 @@
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+  <script
+  src="https://code.jquery.com/jquery-3.4.0.min.js"
+  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+  crossorigin="anonymous"></script>
 
 </head>
 
@@ -60,9 +64,15 @@
           </div>
         </div>
       </li>
-
-      <!-- Nav Item - Charts -->
+    
       <li class="nav-item {{ Request::routeIs('requests') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/requests') }}">
+          <i class="fas fa-fw fa-exclamation-circle"></i>
+          <span>Requests</span></a>
+      </li>
+      
+      <!-- Nav Item - Charts -->
+      <li class="nav-item {{ Request::routeIs('requestsNew') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/requests/new') }}">
           <i class="fas fa-fw fa-calendar-plus"></i>
           <span>Schedule Pickup</span></a>
@@ -130,7 +140,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Eric Villnow {{ date('Y') }}</span>
+            <span>Copyright &copy; Bemidji State Computer Science - Eric Villnow {{ date('Y') }}</span>
           </div>
         </div>
       </footer>
@@ -168,7 +178,31 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
+  
+  <!-- Logout Modal-->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Delete" below if you are sure you want to delete this @yield('desc').</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-danger" href="#" onclick="event.preventDefault();
+                                                     document.getElementById('delete-form').submit();">Delete</a>
+          <form id="delete-form" action="@yield('action')" method="POST" style="display: none;">
+              @CSRF
+              @method('DELETE')
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>

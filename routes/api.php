@@ -20,6 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 /**
  * returns Clients
  */
+ 
+ Route::get('/', function () {
+    return view('welcome');
+});
 Route::get('/clients', function(){
     return \App\Client::all();
 });
@@ -35,7 +39,7 @@ Route::get('/drivers', function(){
  * returns ServiceableRequests
  */
 Route::get('/serviceable-requests', function(){
-    return \App\ServiceableRequests::all();
+    return \App\ServiceableRequests::with('client')->with('driver')->get();
 });
 
 /**
@@ -165,7 +169,7 @@ Route::get('/driver', function(Request $request){
  * Example: /api/client-requests?id=
  */
 Route::get('/client-requests', function(Request $request){
-    return \App\ServiceableRequests::where(['client_id' => $request->input('id')])->get();
+    return \App\ServiceableRequests::with('driver')->where(['client_id' => $request->input('id')])->get();
 });
 
 /**
@@ -174,7 +178,50 @@ Route::get('/client-requests', function(Request $request){
  * Example: /api/driver-requests?id=
  */
 Route::get('/driver-requests', function(Request $request){
-    return \App\ServiceableRequests::where(['driver_id' => $request->input('id')])->get();
+    return \App\ServiceableRequests::with('client')->where(['driver_id' => $request->input('id')])->get();
+    
+});
+
+/**
+ * Params:
+ * id
+ * Example: /api/client-history?id=
+ */
+Route::get('/client-history', function(Request $request){
+    return \App\History::with('driver')->with('rating')->where(['client_id' => $request->input('id')])->get();
+});
+
+/**
+ * Params:
+ * id
+ * Example: /api/driver-history?id=
+ */
+Route::get('/driver-history', function(Request $request){
+    return \App\History::with('client')->with('rating')->where(['driver_id' => $request->input('id')])->get();
+    
+});
+
+Route::get('/rate', function(Request $request){
+    $history = \App\History::with('rating')->where('id',$request['request_id'])->first();
+    
+    
+    
+    $rating = $history->rating;
+    if($request['is_driver']=="true"){
+        $rating->driver_rating = $request['rating'];
+        if(isset($request['comment'])){
+            $rating->driver_comment = $request['comment'];
+        }
+    }else{
+        $rating->client_rating = $request['rating'];
+        if(isset($request['comment'])){
+            $rating->client_comment = $request['comment'];
+        }
+    }
+    $rating->save();
+    $history = \App\History::with('rating')->where('id',$request['request_id'])->first();
+    return $history;
+    
 });
 
 /**
@@ -203,6 +250,9 @@ Route::get('/finished-request', function(Request $request){
     $serviceable = \App\ServiceableRequests::where('id',$request->input('request_id'))->first();
     $serviceable->driver_id = (integer)$request->input('driver_id');
     $history = \App\History::create($serviceable->toArray());
+    $rating = new \App\Rating;
+    $rating->history_id = $history->id;
+    $rating->save();
     $serviceable->delete();
     return $history;
 });

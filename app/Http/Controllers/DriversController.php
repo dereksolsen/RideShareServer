@@ -21,9 +21,13 @@ class DriversController extends Controller
     public function create(){
         return view('admin.drivers.create');
     }
-    public function view($name){
-        $driver = Driver::where('name', $name)->first();
-        return view('admin.drivers.view');
+    public function view($email){
+        $driver = Driver::where('email', $email)->first();
+        return view('admin.drivers.view', compact(["driver"]));
+    }
+    public function edit($email){
+        $driver = Driver::where('email', $email)->first();
+        return view('admin.drivers.edit', compact(["driver"]));
     }
     public function store(){
         $request = request();
@@ -38,5 +42,12 @@ class DriversController extends Controller
             Driver::create($request->all());
             return redirect('/drivers');
         }
+    }
+    
+    
+    public function destroy($email){
+        $driver = Driver::where('email', $email)->get()->first();
+        $driver->delete();
+        return redirect('/drivers');
     }
 }

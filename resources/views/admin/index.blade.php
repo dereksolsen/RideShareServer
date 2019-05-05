@@ -25,20 +25,54 @@
                   <div class="chart-area d-flex flex-grow-1" id="map">
                   </div>
                   <script>
+                    var geocoder;
                     var map;
+                    
+                   
+                    
                     function initMap() {
+                      var points = @json($requests);
+                      var markers = [];
+                      var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                      var labelIndex = 0;
+                      
                       map = new google.maps.Map(document.getElementById('map'), {
                         center: {lat: 46.9863, lng: -94.2114},
                         zoom: 12,
-                        disableDefaultUI: true,
+                        //disableDefaultUI: true,
                         mapTypeId: 'satellite',
-                        minZoom: 12,
-                        maxZoom:12,
-                        draggable: false
+                        //minZoom: 12,
+                        //maxZoom:12,
+                        //draggable: false
                       });
+                      
+                      geocoder = new google.maps.Geocoder();
+                      
+                      console.log(points.length);
+                      
+                      var label, color;
+                      
+                      for ( var i = 0; i < points.length; i++){
+                        console.log("Test" + i);
+                        
+                        geocoder.geocode({'address': points[i]['pick_up_address']}, function(results, status) {
+                          if(status == 'OK'){
+    
+                            
+                            markers[i] = new google.maps.Marker({
+                              map:map,
+                              label: labels[labelIndex++ % labels.length],
+                              position: results[0].geometry.location
+                            })
+                          }else{
+                            //alert("Error:" + status);
+                          }
+                        });
+                      }
+                      
                     }
                   </script>
-                  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1V1IXtf9k-gcheHfdkkPw3jnglMitPq8&callback=initMap"
+                  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKitjvlrCluLZWGWNyzzS92QoRUQbUyhE&callback=initMap"
                   async defer></script>
                 </div>
               </div>

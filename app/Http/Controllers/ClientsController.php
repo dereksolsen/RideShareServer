@@ -21,6 +21,14 @@ class ClientsController extends Controller
     public function create(){
         return view('admin.clients.create');
     }
+    public function view($email){
+        $client = Client::where("email", $email)->first();
+        return view('admin.clients.view', compact(["client"]));
+    }
+    public function edit($email){
+        $client = Client::where("email", $email)->first();
+        return view('admin.clients.edit', compact(["client"]));
+    }
     public function store(){
         $request = request();
         if($request->input('password') != $request->input('confirm_password')){
@@ -34,5 +42,21 @@ class ClientsController extends Controller
             Client::create($request->all());
             return redirect('/clients');
         }
+    }
+    public function update($email){
+        switch(request('action')){
+            case "authorize":
+                $driver = Client::where('email',$email)->first();
+                $driver->authenticated = true;
+                $driver->save();
+                return redirect('/clients');
+                break;
+        }
+    }
+    
+    public function destroy($email){
+        $client = Client::where('email', $email)->get()->first();
+        $client->delete();
+        return redirect('/clients');
     }
 }

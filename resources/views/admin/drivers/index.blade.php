@@ -28,6 +28,7 @@
                       <th>E-mail</th>
                       <th>Phone Number</th>
                       <th>Rating</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -36,6 +37,7 @@
                       <th>E-mail</th>
                       <th>Phone Number</th>
                       <th>Rating</th>
+                      <th>Actions</th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -43,8 +45,20 @@
                     <tr>
                       <td>{{ $driver['name'] }}</td>
                       <td>{{ $driver['email'] }}</td>
-                      <td>{{ $driver['phone_number'] }}</td>
-                      <td>{{ $driver['rating'] }}</td>
+                      <td>{{ $driver['phone_number'] . ' ' . $driver->rating() }}</td>
+                      <td>@for ($i = 0; $i < 5; $i++)
+                        @if ($i < $driver->rating())
+                          <i class="fa fa-star"></i>
+                        @else
+                          <i class="far fa-star"></i>
+                        @endif
+                      @endfor</td>
+                      <td>
+                       <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal" style="float:left;">Delete</a>
+                        <form method="get" action="{{ url('/drivers/' . $driver['email'] . '/edit') }}" style="float:left;">
+                          <input type="submit" class="btn btn-info" value="Edit">
+                        </form>
+                      </td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -59,3 +73,6 @@
         </div>
         <!-- /.container-fluid -->
 @endsection
+
+@section('action',url('/drivers/' . $driver['email']))
+@section('desc'," request")

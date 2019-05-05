@@ -77,6 +77,10 @@
                     <li>/api/client?id=</li>
                     <li>/api/client-requests?id=</li>
                     <li>/api/driver-requests?id=</li>
+                    
+                    <li>/api/client-history?id=</li>
+                    <li>/api/driver-history?id=</li>
+                    <li>/api/rate?request_id=&is_driver=(true/false)&rating=&comment=(optional)</li>
                     <li>/api/create-request?client_id=&destination_address=&pick_up_address=&estimated_length=&time=&date=</li>
                     <li>/api/finished-request?request_id=&driver_id=</li>
                     <li>/api/authorize-client?client_id=&authorize=</li>

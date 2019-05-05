@@ -7,10 +7,6 @@
           <!-- Page Heading -->
           <div class="d-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Requests</h1>
-            <div>
-              <a href="{{ url('/requests/new') }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Schedule Pickup</a>
-              <a href="{{ url('/requests/history') }}" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i class="fas fa-history fa-sm text-white-50"></i> History</a>
-            </div>
           </div>
 
           <!-- Content Row -->
@@ -20,7 +16,7 @@
             <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Requests</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Request History</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -34,7 +30,6 @@
                       <th>Date</th>
                       <th>Time</th>
                       <th>Length</th>
-                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -46,7 +41,6 @@
                       <th>Date</th>
                       <th>Time</th>
                       <th>Length</th>
-                      <th>Actions</th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -59,13 +53,6 @@
                       <td>{{ $request['date'] }}</td>
                       <td>{{ $request['time'] }}</td>
                       <td>{{ $request['estimated_length'] }}</td>
-                      
-                      <td>
-                        <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal" style="float:left;">Delete</a>
-                        <form method="get" action="{{ url('/requests/' . $request['id'] . '/edit') }}" style="float:left;">
-                          <input type="submit" class="btn btn-info" value="Edit">
-                        </form>
-                      </td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -80,6 +67,3 @@
         </div>
         <!-- /.container-fluid -->
 @endsection
-
-@section('action',url('/requests/' . $request['id']))
-@section('desc'," request")

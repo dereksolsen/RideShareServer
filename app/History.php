@@ -23,4 +23,16 @@ class History extends Model
     protected $hidden = [
 
     ];
+    
+    public function driver(){
+        return $this->belongsTo('App\Driver');
+    }
+    
+    public function client(){
+        return $this->belongsTo('App\Client');
+    }
+    
+    public function rating(){
+        return $this->hasOne('App\Rating');
+    }
 }

@@ -28,6 +28,7 @@
                       <th>E-mail</th>
                       <th>Phone Number</th>
                       <th>Rating</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -36,15 +37,37 @@
                       <th>E-mail</th>
                       <th>Phone Number</th>
                       <th>Rating</th>
+                      <th>Actions</th>
                     </tr>
                   </tfoot>
                   <tbody>
                     @foreach ($clients as $client)
                     <tr>
-                      <td>{{ $client['name'] }}</td>
+                      <td><a href="{{ url('/clients/' . $client['email']) }}">{{ $client['name'] }}</a></td>
                       <td>{{ $client['email'] }}</td>
                       <td>{{ $client['phone_number'] }}</td>
-                      <td>{{ $client['rating'] }}</td>
+                      <td>@for ($i = 0; $i < 5; $i++)
+                        @if ($i < $client->rating())
+                          <i class="fa fa-star"></i>
+                        @else
+                          <i class="far fa-star"></i>
+                        @endif
+                      @endfor</td>
+                      <td>
+                        @if ($client['authenticated'] == 0)
+                        <form method="post" action="{{ url('/clients/' . $client['email']) }}">
+                          @CSRF
+                          @method('PATCH')
+                          <input type="hidden" name='action' value="authorize">
+                          <input type="submit" class="btn btn-warning" value="Authorize">
+                        </form>
+                        @else
+                        <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal" style="float:left;">Delete</a>
+                        <form method="get" action="{{ url('/clients/' . $client['email'] . '/edit') }}" style="float:left;">
+                          <input type="submit" class="btn btn-info" value="Edit">
+                        </form>
+                        @endif
+                      </td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -59,3 +82,5 @@
         </div>
         <!-- /.container-fluid -->
 @endsection
+@section('action',url('/clients/' . $client['email']))
+@section('desc'," request")

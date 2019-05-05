@@ -15,7 +15,7 @@
               <div class="card shadow d-flex flex-grow-1">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">{{ $driver['name'] }}</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Edit User</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body d-flex flex-column" style="padding:0;">

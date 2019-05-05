@@ -2,6 +2,10 @@
 
 @section('content')
 <!-- Begin Page Content -->
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBKitjvlrCluLZWGWNyzzS92QoRUQbUyhE"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="{{ url("/js/jquery.geocomplete.min.js") }}"></script>
+        
         <div class="container-fluid d-flex flex-column flex-grow-1">
 
           <!-- Page Heading -->
@@ -48,14 +52,17 @@
                 </div>
                 <div class="form-group">
                   <label for="date">Date</label>
-                  <input type="text" name="date" class="form-control" id="date" placeholder="Date (11-07-2019)">
+                  <input type="text" name="date" class="form-control" id="date" placeholder="Date (11/07/2019)">
                 </div>
                 <button type="submit" class="btn btn-primary">Create Request</button>
               </form>
             </div>
           </div>
             
-            
+            <script>
+          $("#destination_address").geocomplete();
+          $("#pick_up_address").geocomplete();
+        </script>
           </div>
 
         </div>

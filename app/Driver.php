@@ -27,4 +27,20 @@ class Driver extends Model
     public function requests(){
         return $this->hasMany('App\ServiceableRequests');
     }
+    
+    public function rating(){
+        $ratings = History::with('Rating')->where('driver_id',$this->id)->get()->all();
+        $sum = 0;
+        $count = 0;
+        foreach($ratings as $rating){
+            $sum = $sum + $rating['rating']['client_rating'];
+            $count++;
+        }
+        if($count > 0){
+            $average = $sum/$count;
+        }else{
+            $average = null;
+        }
+        return $average;
+    }
 }
