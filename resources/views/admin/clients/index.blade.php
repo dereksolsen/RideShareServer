@@ -44,7 +44,7 @@
                     @foreach ($clients as $client)
                     <tr>
                       <td><a href="{{ url('/clients/' . $client['email']) }}">{{ $client['name'] }}</a></td>
-                      <td>{{ $client['email'] }}</td>
+                      <td><a href="mailto:{{ $client['email'] }}">{{ $client['email'] }}</a></td>
                       <td>{{ $client['phone_number'] }}</td>
                       <td>@for ($i = 0; $i < 5; $i++)
                         @if ($i < $client->rating())
@@ -62,7 +62,9 @@
                           <input type="submit" class="btn btn-warning" value="Authorize">
                         </form>
                         @else
-                        <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal" style="float:left;">Delete</a>
+                        <div style="float:left;">
+                          <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal">Delete</a>&nbsp;
+                        </div>
                         <form method="get" action="{{ url('/clients/' . $client['email'] . '/edit') }}" style="float:left;">
                           <input type="submit" class="btn btn-info" value="Edit">
                         </form>

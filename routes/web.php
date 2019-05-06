@@ -23,6 +23,7 @@ Route::get('/drivers', 'DriversController@index')->name('users');
     Route::get('/drivers/register', 'DriversController@create')->name('users');
     Route::post('/drivers', 'DriversController@store')->name('users');
     Route::get('/drivers/{email}', 'DriversController@view')->name('users');
+    Route::patch('/drivers/{email}', 'DriversController@update')->name('users');
     Route::delete('/drivers/{email}', 'DriversController@destroy')->name('users');
     Route::get('/drivers/{email}/edit', 'DriversController@edit')->name('users');
     
@@ -39,3 +40,5 @@ Route::get('/requests', 'ServiceableRequestsController@index')->name('requests')
     Route::post('/requests', 'ServiceableRequestsController@store')->name('requests');
     Route::get('/requests/history', 'ServiceableRequestsController@history')->name("requests");
     Route::delete('/requests/{id}', 'ServiceableRequestsController@destroy')->name('requests');
+    Route::get('/requests/{id}/edit', 'ServiceableRequestsController@edit')->name('requests');
+    Route::patch('/requests/{id}', 'ServiceableRequestsController@update')->name('requests');

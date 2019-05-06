@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Driver;
+use App\History;
 
 class DriversController extends Controller
 {
@@ -23,7 +24,8 @@ class DriversController extends Controller
     }
     public function view($email){
         $driver = Driver::where('email', $email)->first();
-        return view('admin.drivers.view', compact(["driver"]));
+        $history = History::where("driver_id", $driver['id'])->get()->all();
+        return view('admin.drivers.view', compact(["driver","history"]));
     }
     public function edit($email){
         $driver = Driver::where('email', $email)->first();
@@ -44,6 +46,23 @@ class DriversController extends Controller
         }
     }
     
+    public function update($email){
+        switch(request('action')){
+            case "edit":
+                $driver = Driver::where('email', $email)->first();
+                $driver->name = request('name');
+                $driver->email = request('email');
+                $driver->phone_number = request('phone_number');
+                if(request('password') !== null){
+                    if(request('password') == request('confirm_password')){
+                        $driver->bcrypt(request('password'));
+                    }
+                }
+                $driver->save();
+                return redirect('/drivers/' . $driver['email']);
+                break;
+        }
+    }
     
     public function destroy($email){
         $driver = Driver::where('email', $email)->get()->first();

@@ -43,4 +43,8 @@ class Driver extends Model
         }
         return $average;
     }
+    
+    public function ratings(){
+        return $this->hasManyThrough('App\Rating', 'App\History');
+    }
 }

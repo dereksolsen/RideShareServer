@@ -61,8 +61,11 @@
                       <td>{{ $request['estimated_length'] }}</td>
                       
                       <td>
-                        <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal" style="float:left;">Delete</a>
-                        <form method="get" action="{{ url('/requests/' . $request['id'] . '/edit') }}" style="float:left;">
+                        
+                        <form method="get" action="{{ url('/requests/' . $request['id'] . '/edit') }}">
+                          <div style="float:left;">
+                          <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal">Delete</a>&nbsp;
+                          </div>
                           <input type="submit" class="btn btn-info" value="Edit">
                         </form>
                       </td>

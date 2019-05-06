@@ -18,8 +18,33 @@
                   <h6 class="m-0 font-weight-bold text-primary">Edit User</h6>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body d-flex flex-column" style="padding:0;">
-                  body
+                <div class="card-body d-flex flex-column">
+                   <form action="{{ url('/clients/' . $client['email']) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <input type="hidden" name='action' value="edit">
+                    <div class="form-group">
+                      <label for="name">First Name</label>
+                      <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{ $client['name'] }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">E-Mail</label>
+                      <input type="email" name="email" class="form-control" id="email" placeholder="E-Mail" value="{{ $client['email'] }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="phone_number">Phone Number</label>
+                      <input type="tel" name="phone_number" class="form-control" id="phone_number" placeholder="Phone Number" value="{{ $client['phone_number'] }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                      <label for="confirm_password">Password (confirm)</label>
+                      <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Password (confirm)">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update User</button>
+                  </form>
                 </div>
               </div>
             </div>

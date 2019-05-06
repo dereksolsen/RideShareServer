@@ -40,4 +40,21 @@ class ServiceableRequestsController extends Controller
         $request->delete();
         return redirect('/requests');
     }
+    public function edit($id){
+        $clients = Client::all();
+        $request = ServiceableRequests::where("id", $id)->first();
+        return view('admin.requests.edit', compact(["request","clients"]));
+    }
+    
+    public function update($id){
+                $request = ServiceableRequests::where('id', $id)->first();
+                $request->client_id = request('client_id');
+                $request->pick_up_address = request('pick_up_address');
+                $request->destination_address = request('destination_address');
+                $request->estimated_length = request('estimated_length');
+                $request->time = request('time');
+                $request->date = request('date');
+                $request->save();
+                return redirect('/requests/');
+    }
 }

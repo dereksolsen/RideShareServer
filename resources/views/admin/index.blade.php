@@ -14,7 +14,7 @@
           <div class="d-flex flex-grow-1 row">
 
             <!-- Area Chart -->
-            <div class="col-lg-9 d-flex mb-4">
+            <div class="col-lg-12 d-flex mb-4">
               <div class="card shadow d-flex flex-grow-1">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -27,8 +27,6 @@
                   <script>
                     var geocoder;
                     var map;
-                    
-                   
                     
                     function initMap() {
                       var points = @json($requests);
@@ -76,22 +74,6 @@
                   async defer></script>
                 </div>
               </div>
-            </div>
-            
-            <div class="col-xl-3 col-md-6 mb-4">
-                <h3>Upcoming Rides</h3>
-                @foreach ($requests as $request)
-                
-                @endforeach
-                <div style="width:100%; height:100px;background-color:white; border-radius:5px;">
-                  <div style="float:left; height:100%; border-right: 1px solid black;">9:32</div>
-                  <div style="float:left; height:100%; padding:10px;">
-                    <h6>Name</h6>
-                  </div>
-                  <div style="float:right; height:100%; padding:5px; background-color:green;">
-                    Font A
-                  </div>
-                </div>
             </div>
             
           </div>

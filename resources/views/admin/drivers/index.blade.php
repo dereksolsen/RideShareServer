@@ -43,8 +43,8 @@
                   <tbody>
                     @foreach ($drivers as $driver)
                     <tr>
-                      <td>{{ $driver['name'] }}</td>
-                      <td>{{ $driver['email'] }}</td>
+                      <td><a href="{{ url('/drivers/' . $driver['email']) }}">{{ $driver['name'] }}</a></td>
+                      <td><a href="mailto:{{ $driver['email'] }}">{{ $driver['email'] }}</a></td>
                       <td>{{ $driver['phone_number'] . ' ' . $driver->rating() }}</td>
                       <td>@for ($i = 0; $i < 5; $i++)
                         @if ($i < $driver->rating())
@@ -54,7 +54,9 @@
                         @endif
                       @endfor</td>
                       <td>
-                       <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal" style="float:left;">Delete</a>
+                       <div style="float:left;">
+                          <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal">Delete</a>&nbsp;
+                        </div>
                         <form method="get" action="{{ url('/drivers/' . $driver['email'] . '/edit') }}" style="float:left;">
                           <input type="submit" class="btn btn-info" value="Edit">
                         </form>
